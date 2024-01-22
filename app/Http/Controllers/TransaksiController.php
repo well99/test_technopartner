@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TransaksiRequest;
 use Illuminate\Http\Request;
 use App\Models\Transaksi;
 use App\Models\Kategori;
@@ -17,7 +18,7 @@ class TransaksiController extends Controller
             $transaksi_get->whereDate('created_at', '<=', $request->end);
             $data['transaksi'] = $transaksi_get->get();
         } else {
-            $data['transaksi'] = $transaksi_get->whereMonth('created_at', dfate('m'));
+            $data['transaksi'] = $transaksi_get->whereMonth('created_at', date('m'))->get();
         }
 
         // dd($data['transaksi']->toArray());
@@ -31,11 +32,11 @@ class TransaksiController extends Controller
         return view('transaksi.form', $data);
     }
 
-    function store(Request $request)
+    function store(TransaksiRequest $request)
     {
         Transaksi::create([
-            'tipe_transaksi' => $request->tipe,
-            'id_kategori' => $request->kategori,
+            'tipe_transaksi' => $request->tipe_transaksi,
+            'id_kategori' => $request->id_kategori,
             'nominal' => $request->nominal,
             'deskripsi' => $request->deskripsi
         ]);
@@ -51,11 +52,11 @@ class TransaksiController extends Controller
         return view('transaksi.form', $data);
     }
 
-    function update(Request $request)
+    function update(TransaksiRequest $request)
     {
         $data = [
-            'tipe_transaksi' => $request->tipe,
-            'id_kategori' => $request->kategori,
+            'tipe_transaksi' => $request->tipe_transaksi,
+            'id_kategori' => $request->id_kategori,
             'nominal' => $request->nominal,
             'deskripsi' => $request->deskripsi
         ];

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Kategori;
+use App\Http\Requests\KategoriRequest;
 
 class KategoriController extends Controller
 {
@@ -19,12 +20,12 @@ class KategoriController extends Controller
         return view('kategori.form');
     }
 
-    function store(Request $request)
+    function store(KategoriRequest $request)
     {
         Kategori::create([
-            'tipe_kategori' => $request->tipe,
-            'nama_kategori' => $request->nama,
-            'deskripsi_kategori' => $request->deskripsi
+            'tipe_kategori' => $request->tipe_kategori,
+            'nama_kategori' => $request->nama_kategori,
+            'deskripsi_kategori' => $request->deskripsi_kategori
         ]);
         return redirect()->to('kategori');
     }
@@ -36,12 +37,12 @@ class KategoriController extends Controller
         return view('kategori.form', $data);
     }
 
-    function update(Request $request)
+    function update(KategoriRequest $request)
     {
         $data = [
-            'tipe_kategori' => $request->tipe,
-            'nama_kategori' => $request->nama,
-            'deskripsi_kategori' => $request->deskripsi
+            'tipe_kategori' => $request->tipe_kategori,
+            'nama_kategori' => $request->nama_kategori,
+            'deskripsi_kategori' => $request->deskripsi_kategori
         ];
         Kategori::where('id_kategori', $request->id)->update($data);
         return redirect()->to('kategori');
